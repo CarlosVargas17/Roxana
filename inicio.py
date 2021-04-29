@@ -9,7 +9,8 @@ import time
 
 class SimpleApp():
     def __init__(self, **kwargs):
-
+        self.backcolor = "#141454"
+        self.fgcolor = "#ffffff"
         self.salida = []
         with open('./preferencias.txt', 'r') as f:
             # with open('./preferencias.txt', 'r') as f:

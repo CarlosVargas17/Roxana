@@ -126,6 +126,7 @@ class Roxana():
         self.btn2.destroy()
         self.lbl1.config(text="Contesta por favor con la verdad", font=("Arial", 18))
         self.lbl1.place(x=20, y=10)
+
         self.lbl2.config(text="¿Cómo te llamas?")
         self.lbl2.place(x=28, y=50)
         self.ent1 = Entry(self.root, font=("Arial", 10), fg="black", width=44)
@@ -258,10 +259,13 @@ class Roxana():
 
             messagebox.showinfo(message="Tus datos han sido generados correctamente", title="Transacción satisfactoria")
             self.btn3.config(state=DISABLED)
+            self.root.destroy()
+            a=Roxana()
+
+
 
         else:
             messagebox.showwarning(message="Algúl campo se encuentra vacio, verifique y llenelo", title="Alerta")
-
     def detecta_cambio(self, event):
         seleccionado = self.temas.get()
         print("Nuevo elemento seleccionado:", seleccionado)
@@ -292,16 +296,46 @@ class Roxana():
 
         self.root.update()
 
+
+    def detecta_cambio2(self, event):
+        seleccionado = self.temas.get()
+        print("Nuevo elemento seleccionado:", seleccionado)
+
+        temas = [['Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Morado'],
+                      ["#ffffff", "#141454", "#34B677", "#FB2929", "#31DFE8", "#340A3C"],
+                      ["#000000", "#ffffff", "#ffffff", "#ffffff", "#000000", "#ffffff"]]
+
+        for i in range(len(temas[0])):
+            if temas[0][i] in seleccionado:
+                print("1", temas[1][i])
+                print("2", temas[2][i])
+                self.backcolor = temas[1][i]
+                self.fgcolor = temas[2][i]
+
+
+        self.win.config(bg=self.backcolor)
+        self.win.wm_attributes('-topmost', False)
+        self.win.iconbitmap('./images/icon.ico')
+        self.lbl1.config(bg=self.backcolor, fg=self.fgcolor)
+        self.lbl2.config(bg=self.backcolor, fg=self.fgcolor)
+        self.lbl3.config(bg=self.backcolor, fg=self.fgcolor)
+        self.lbl4.config(bg=self.backcolor, fg=self.fgcolor)
+        self.lbl5.config(bg=self.backcolor, fg=self.fgcolor)
+        self.logo.config(bg=self.backcolor, fg=self.fgcolor)
+        self.lbl6.config(bg=self.backcolor, fg=self.fgcolor)
+        self.lbl7.config(bg=self.backcolor, fg=self.fgcolor)
+
+        self.win.update()
     def detecta_idioma(self, event):
         seleccionado = self.idioma.get()
         print("Nuevo idioma seleccionado:", seleccionado)
 
     def ventana(self):
         name0 = self.elementos[0]
-        name = ""
+        self.name = ""
         for i in (name0):
-            name += (i + " ")
-        print(name)
+            self.name += (i + " ")
+        print(self.name)
         print(self.salida)
         print(self.elementos)
 
@@ -334,7 +368,7 @@ class Roxana():
         self.micro = ImageTk.PhotoImage(image=Image.open(imagen03))
         self.logo = Label(self.root, image=self.imagen, bg=self.backcolor)
         self.logo.place(x=15, y=5)
-        self.lbl1 = Label(self.root, text=("Bienvenido " + name), anchor="n", justify=RIGHT, width=33,
+        self.lbl1 = Label(self.root, text=("Bienvenido " + self.name), anchor="n", justify=RIGHT, width=33,
                           font=("Arial", 22), bg=self.backcolor, fg=self.fgcolor)
         self.lbl1.place(x=95, y=20)
         self.btnmic = Button(self.root, text="", image=self.micro, command=self.escuchando, bg=self.backcolor,
@@ -354,6 +388,12 @@ class Roxana():
         self.console = Label(self.root, text="Presiona para escucharte", width=39, anchor="n", justify=RIGHT,
                              font=("Arial", 22), bg=self.backcolor, fg=self.fgcolor)
         self.console.place(x=20, y=380)
+        btnfoto = PhotoImage(file="./images/user.png")
+        self.btn1 = Button(self.root, text="Perfil", image = btnfoto,compound=LEFT, command=self.aceptar2, font=("Arial", 11), bg="#139134",
+                           fg=self.fgcolor, highlightthickness=0, highlightcolor="green", relief="flat",
+                           activeforeground=self.fgcolor, activebackground="green")
+        self.btn1.place(x=640, y=10)
+
         self.root.mainloop()
 
     def escuchando(self):
@@ -489,6 +529,115 @@ class Roxana():
 
     def reload(self):
         pass
+
+    def aceptar2(self):
+        self.win=Toplevel()
+        ancho_ventana = 720
+        alto_ventana = 480
+        x_ventana = self.win.winfo_screenwidth() // 2 - ancho_ventana // 2
+        y_ventana = self.win.winfo_screenheight() // 2 - alto_ventana // 2
+        posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        self.win.geometry(posicion)
+        self.win.config(bg=self.backcolor)
+        self.win.wm_attributes('-topmost', False)
+        self.win.iconbitmap('./images/icon.ico')
+        # self.root.overrideredirect(False)
+        self.win.resizable(0, 0)
+
+        self.logo = Label(self.win, image=self.imagen2, bg=self.backcolor)
+        self.logo.place(x=420, y=55)
+        self.lbl1 = Label(self.win, text=("Bienvenido " + self.name), anchor="n", justify=RIGHT, width=33,
+                          font=("Arial", 22), bg=self.backcolor, fg=self.fgcolor)
+        self.lbl1.config(text="Contesta por favor con la verdad", font=("Arial", 18))
+        self.lbl1.place(x=20, y=10)
+        self.lbl2 = Label(self.win, text="La siguiente", font=("Arial", 12),
+                          bg=self.backcolor, fg=self.fgcolor)
+        self.lbl2.config(text="¿Cómo te llamas?")
+        self.lbl2.place(x=28, y=50)
+        self.ent1 = Entry(self.win, font=("Arial", 10), fg="black", width=44)
+        self.ent1.place(x=20, y=80)
+        self.lbl3 = Label(self.win, text="¿Cuál es tu fecha de nacimiento?", font=("Arial", 12), bg=self.backcolor,
+                          fg=self.fgcolor)
+        self.lbl3.place(x=23, y=110)
+        now = datetime.now()
+        anio = now.year
+        mes = now.month
+        dia = now.day
+        self.de = DateEntry(self.win, locale='es_MX', date_pattern='dd/mm/y', year=anio, month=mes, day=dia, width=26,
+                            selectmode='day', cursor="hand1", font="Arial 14", highlightthickness=0,
+                            selectbackground='gray80',
+                            selectforeground='black',
+                            normalbackground='white',
+                            normalforeground='black',
+                            background='gray90',
+                            foreground='black',
+                            bordercolor='gray90',
+                            othermonthforeground='gray50',
+                            othermonthbackground='white',
+                            othermonthweforeground='gray50',
+                            othermonthwebackground='white',
+                            weekendbackground='white',
+                            weekendforeground='black',
+                            headersbackground='white',
+                            headersforeground='gray70')
+        self.de.place(x=20, y=140)
+        self.lbl4 = Label(self.win, text="Selecciona un tema", font=("Arial", 12), bg=self.backcolor, fg=self.fgcolor)
+        self.lbl4.place(x=28, y=170)
+        tema = StringVar()
+        self.temas = ttk.Combobox(self.win, width=47, textvariable=tema, state="readonly")
+        self.temas.set("Oscuro (por defecto)")
+        self.temas['values'] = ('Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Morado')
+        self.temas.place(x=20, y=200)
+        self.temas.bind("<<ComboboxSelected>>", self.detecta_cambio2)
+
+        self.lbl5 = Label(self.win, text="Selecciona un idioma", font=("Arial", 12), bg=self.backcolor,
+                          fg=self.fgcolor)
+        self.lbl5.place(x=27, y=230)
+        idiomas = StringVar()
+        self.idioma = ttk.Combobox(self.win, width=47, textvariable=idiomas, state="readonly")
+        self.idioma['values'] = ('Español', 'Ingles', 'Chino', 'Ruso', 'Francés', 'portugués')
+        self.idioma.place(x=20, y=260)
+        self.idioma.bind("<<ComboboxSelected>>", self.detecta_idioma)
+
+        self.lbl6 = Label(self.win, text="Datos geograficos", font=("Arial", 12), bg=self.backcolor, fg=self.fgcolor)
+        self.lbl6.place(x=27, y=290)
+
+        place2 = "CP"
+        self.ent3 = Entry(self.win, font=("Arial", 12), width=10, fg='Grey')
+        self.ent3.insert(0, place2)
+        self.ent3.bind("<FocusIn>", lambda args: self.entradabox(self.ent3))
+        self.ent3.bind("<FocusOut>", lambda args: self.salidabox(place2, self.ent3))
+        self.ent3.bind('<KeyRelease>', lambda e: self.verifica(self.ent3, '0123456789'))
+        self.ent3.place(x=20, y=320)
+
+        place1 = "Ciudad"
+        self.ent2 = Entry(self.win, font=("Arial", 12), fg='Grey', width=20)
+        self.ent2.insert(0, place1)
+        self.ent2.bind("<FocusIn>", lambda args: self.entradabox(self.ent2))
+        self.ent2.bind("<FocusOut>", lambda args: self.salidabox(place1, self.ent2))
+        self.ent2.place(x=150, y=320)
+
+        self.lbl7 = Label(self.win, text="Estado", font=("Arial", 12), bg=self.backcolor, fg=self.fgcolor)
+        self.lbl7.place(x=20, y=350)
+
+        estado = StringVar()
+        self.estados = ttk.Combobox(self.win, width=48, textvariable=estado, state="readonly")
+        self.estados['values'] = ("Aguascalientes", "Baja California", "Baja California Sur",
+                                  "Campeche", "Coahuila de Zaragoza", "Colima", "Chiapas",
+                                  "Chihuahua", "Distrito Federal", "Durango", "Guanajuato",
+                                  "Guerrero", "Hidalgo", "Jalisco", "México", "Michoacán de Ocampo",
+                                  "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro",
+                                  "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco",
+                                  "Tamaulipas", "Tlaxcala", "Veracruz de Ignacio de la Llave", "Yucatán", "Zacatecas")
+        self.estados.place(x=20, y=380)
+
+        self.btn3 = Button(self.win, text="Confirmar", width=22, height=1, command=self.llena, font=("Arial", 18),
+                           bg="#139134", fg=self.fgcolor, highlightthickness=0, highlightcolor="green", relief="flat",
+                           activeforeground=self.fgcolor, activebackground="green")
+        self.btn3.place(x=20, y=410)
+
+        self.idioma.update()
+        self.win.mainloop()
 
 
 
