@@ -41,17 +41,32 @@ class Roxana():
         Idioma:
         Lugar:
         """
-        with open('./Interface/preferencias.txt', 'r') as f:
+        with open('./preferencias.txt', 'r') as f:
             # with open('./preferencias.txt', 'r') as f:
             lineas = [linea.split() for linea in f]
         for linea in lineas:
             self.salida.append(linea)
         i = 0
+        self.temas=[['Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Rosa'],
+               ["#ffffff","#141454","#34B677","#FB2929","#31DFE8","#FF5555"],
+               ["#000000","#ffffff","#ffffff","#ffffff","#000000","#ffffff"]]
+
+
+
         self.elementos = self.salida
         tam = len(self.salida)
         if tam == 0:
             self.encuesta()
         else:
+            for i in range(len(self.temas[0])):
+                print(str(self.salida[2]))
+                print("0", self.temas[0][i])
+                if self.temas[0][i] in self.salida[2]:
+
+                    print("1",self.temas[1][i])
+                    print("2",self.temas[2][i])
+                    self.backcolor = self.temas[1][i]
+                    self.fgcolor = self.temas[2][i]
             self.ventana()
 
     def encuesta(self):
@@ -70,12 +85,13 @@ class Roxana():
         x_ventana = self.root.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = self.root.winfo_screenheight() // 2 - alto_ventana // 2
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
+        self.root.wm_attributes("-topmost", True)
         self.root.geometry(posicion)
         self.root.config(bg=self.backcolor)
         self.root.overrideredirect(False)
         self.root.resizable(0, 0)
-        imagen = ("./Interface/images/64x64.png")
-        imagen02 = ("./Interface/images/256x256.png")
+        imagen = ("./images/64x64.png")
+        imagen02 = ("./images/256x256.png")
         self.imagen2 = ImageTk.PhotoImage(image=Image.open(imagen02))
         # imagen = ("./images/64x64.png")
         self.imagen = ImageTk.PhotoImage(image=Image.open(imagen))
@@ -143,7 +159,7 @@ class Roxana():
         tema = StringVar()
         self.temas = ttk.Combobox(self.root, width=47, textvariable=tema, state="readonly")
         self.temas.set("Oscuro (por defecto)")
-        self.temas['values'] = ('Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Azul claro' 'Tonos Grises')
+        self.temas['values'] = ('Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Rosa')
         self.temas.place(x=20, y=200)
         self.temas.bind("<<ComboboxSelected>>", self.detecta_cambio)
 
@@ -235,7 +251,7 @@ class Roxana():
         if name != "" and tema != "" and idioma != "" and cp != "" and city != "" and state != "":
             text = name + "\n" + fecha + "\n" + tema + "\n" + idioma + "\n" + cp + "\n" + city + "\n" + state
             print(text)
-            f = open('./Interface/preferencias.txt', 'w')
+            f = open('./preferencias.txt', 'w')
             f.write(text)
             f.close()
 
@@ -298,9 +314,9 @@ class Roxana():
         self.root.config(bg=self.backcolor)
         self.root.overrideredirect(True)
         self.root.resizable(0, 0)
-        imagen = ("./Interface/images/64x64.png")
-        imagen02 = ("./Interface/images/256x256.png")
-        imagen03 = ("./Interface/images/256x256_i.png")
+        imagen = ("./images/64x64.png")
+        imagen02 = ("./images/256x256.png")
+        imagen03 = ("./images/256x256_i.png")
         self.imagen2 = ImageTk.PhotoImage(image=Image.open(imagen02))
         # imagen = ("./images/64x64.png")
         self.imagen = ImageTk.PhotoImage(image=Image.open(imagen))

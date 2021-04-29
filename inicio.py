@@ -3,7 +3,7 @@
 from tkinter import *
 from PIL import ImageTk
 from PIL import Image
-from Interface import index as rox
+import index as rox
 import time
 
 
@@ -11,7 +11,7 @@ class SimpleApp():
     def __init__(self, **kwargs):
         root = Tk()
 
-        self.filename = './Interface/images/256x256.png'
+        self.filename = './images/256x256.png'
         self.master = root
         self.master.overrideredirect(True)
         self.master.resizable(0, 0)
@@ -28,7 +28,7 @@ class SimpleApp():
         self.canvas = Canvas(root, width=480, height=400, bg="#141454", highlightthickness=0)
         self.canvas.pack()
         self.salida = []
-        with open('./Interface/preferencias.txt', 'r') as f:
+        with open('./preferencias.txt', 'r') as f:
             # with open('./preferencias.txt', 'r') as f:
             lineas = [linea.split() for linea in f]
         for linea in lineas:
