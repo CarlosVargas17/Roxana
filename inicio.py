@@ -61,14 +61,14 @@ class SimpleApp():
             self.lbl = Label(self.master, anchor="n", justify=RIGHT, width=33,
                              text="Hola, soy Roxana, y seré tu asistente", bg=self.backcolor, fg=self.fgcolor, font=("Arial", 18))
             self.lbl.pack(expand=True, fill=X)
-            self.update = self.draw(1).__next__
-            root.after(10, self.update)
+            nume=1
         else:
             self.lbl = Label(self.master, anchor="n", justify=RIGHT, width=33, text="Hola, que gusto verte otra vez",
                              bg=self.backcolor, fg=self.fgcolor, font=("Arial", 18))
             self.lbl.pack(expand=True, fill=X)
-            self.update = self.draw(2).__next__
-            root.after(10, self.update)
+            nume=2
+        self.update = (self.draw(nume)).__next__
+        root.after(10, self.update)
 
         root.mainloop()
 
@@ -132,7 +132,9 @@ class SimpleApp():
             self.canvas.delete()
             self.master.destroy()
             a = rox.Roxana()
+            quit()
             return None
+
 
 SimpleApp()
 
