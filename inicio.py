@@ -13,7 +13,7 @@ class SimpleApp():
 
         self.filename = './images/256x256.png'
         self.master = root
-        self.master.overrideredirect(True)
+
         self.master.resizable(0, 0)
         ancho_ventana = 720
         alto_ventana = 480

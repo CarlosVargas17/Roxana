@@ -71,7 +71,7 @@ class Roxana():
 
     def encuesta(self):
         self.root = them.ThemedTk(theme="arc")
-        self.root.overrideredirect(True)
+        #self.root.overrideredirect(True)
         ax = them.THEMES
         print(ax)
         # ['adapta', 'aquativo', 'arc', 'black', 'blue', 'breeze',
@@ -85,10 +85,10 @@ class Roxana():
         x_ventana = self.root.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = self.root.winfo_screenheight() // 2 - alto_ventana // 2
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
-        self.root.wm_attributes("-topmost", True)
+        self.root.wm_attributes('-topmost', True)
         self.root.geometry(posicion)
         self.root.config(bg=self.backcolor)
-        self.root.overrideredirect(False)
+        #self.root.overrideredirect(False)
         self.root.resizable(0, 0)
         imagen = ("./images/64x64.png")
         imagen02 = ("./images/256x256.png")
@@ -312,7 +312,7 @@ class Roxana():
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.root.geometry(posicion)
         self.root.config(bg=self.backcolor)
-        self.root.overrideredirect(True)
+        #self.root.overrideredirect(True)
         self.root.resizable(0, 0)
         imagen = ("./images/64x64.png")
         imagen02 = ("./images/256x256.png")
