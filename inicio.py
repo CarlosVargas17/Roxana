@@ -9,11 +9,40 @@ import time
 
 class SimpleApp():
     def __init__(self, **kwargs):
+
+        self.salida = []
+        with open('./preferencias.txt', 'r') as f:
+            # with open('./preferencias.txt', 'r') as f:
+            lineas = [linea.split() for linea in f]
+        for linea in lineas:
+            self.salida.append(linea)
+        i = 0
+        self.elementos = self.salida
+        tam = len(self.salida)
+        self.temas = [['Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Morado'],
+                      ["#ffffff", "#141454", "#34B677", "#FB2929", "#31DFE8", "#340A3C"],
+                      ["#000000", "#ffffff", "#ffffff", "#ffffff", "#000000", "#ffffff"]]
+        if tam == 0:
+            self.backcolor="#141454"
+            self.fgcolor = "#ffffff"
+        else:
+            for i in range(len(self.temas[0])):
+                print(str(self.salida[2]))
+                print("0", self.temas[0][i])
+                if self.temas[0][i] in self.salida[2]:
+                    print("1",self.temas[1][i])
+                    print("2",self.temas[2][i])
+                    self.backcolor = self.temas[1][i]
+                    self.fgcolor = self.temas[2][i]
+
+
+
+
         root = Tk()
 
         self.filename = './images/256x256.png'
         self.master = root
-
+        self.master.iconbitmap('./images/icon.ico')
         self.master.resizable(0, 0)
         ancho_ventana = 720
         alto_ventana = 480
@@ -24,27 +53,19 @@ class SimpleApp():
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
 
         self.master.geometry(posicion)
-        self.master.config(bg="#141454")
-        self.canvas = Canvas(root, width=480, height=400, bg="#141454", highlightthickness=0)
+        self.master.config(bg=self.backcolor)
+        self.canvas = Canvas(root, width=480, height=400, bg=self.backcolor, highlightthickness=0)
         self.canvas.pack()
-        self.salida = []
-        with open('./preferencias.txt', 'r') as f:
-            # with open('./preferencias.txt', 'r') as f:
-            lineas = [linea.split() for linea in f]
-        for linea in lineas:
-            self.salida.append(linea)
-        i = 0
-        self.elementos = self.salida
-        tam = len(self.salida)
+
         if tam == 0:
             self.lbl = Label(self.master, anchor="n", justify=RIGHT, width=33,
-                             text="Hola, soy Roxana, y seré tu asistente", bg="#141454", fg="white", font=("Arial", 18))
+                             text="Hola, soy Roxana, y seré tu asistente", bg=self.backcolor, fg=self.fgcolor, font=("Arial", 18))
             self.lbl.pack(expand=True, fill=X)
             self.update = self.draw(1).__next__
             root.after(10, self.update)
         else:
             self.lbl = Label(self.master, anchor="n", justify=RIGHT, width=33, text="Hola, que gusto verte otra vez",
-                             bg="#141454", fg="white", font=("Arial", 18))
+                             bg=self.backcolor, fg=self.fgcolor, font=("Arial", 18))
             self.lbl.pack(expand=True, fill=X)
             self.update = self.draw(2).__next__
             root.after(10, self.update)
@@ -107,9 +128,11 @@ class SimpleApp():
                     i += 1
         if i == tam + 1:
             i = 0
+
             self.canvas.delete()
             self.master.destroy()
             a = rox.Roxana()
+            return None
 
+SimpleApp()
 
-b = SimpleApp()

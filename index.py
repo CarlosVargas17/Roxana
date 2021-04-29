@@ -47,8 +47,8 @@ class Roxana():
         for linea in lineas:
             self.salida.append(linea)
         i = 0
-        self.temas=[['Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Rosa'],
-               ["#ffffff","#141454","#34B677","#FB2929","#31DFE8","#FF5555"],
+        self.temas=[['Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Morado'],
+               ["#ffffff","#141454","#34B677","#FB2929","#31DFE8","#340A3C"],
                ["#000000","#ffffff","#ffffff","#ffffff","#000000","#ffffff"]]
 
 
@@ -85,9 +85,10 @@ class Roxana():
         x_ventana = self.root.winfo_screenwidth() // 2 - ancho_ventana // 2
         y_ventana = self.root.winfo_screenheight() // 2 - alto_ventana // 2
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
-        self.root.wm_attributes('-topmost', True)
         self.root.geometry(posicion)
         self.root.config(bg=self.backcolor)
+        self.root.wm_attributes('-topmost', False)
+        self.root.iconbitmap('./images/icon.ico')
         #self.root.overrideredirect(False)
         self.root.resizable(0, 0)
         imagen = ("./images/64x64.png")
@@ -159,7 +160,7 @@ class Roxana():
         tema = StringVar()
         self.temas = ttk.Combobox(self.root, width=47, textvariable=tema, state="readonly")
         self.temas.set("Oscuro (por defecto)")
-        self.temas['values'] = ('Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Rosa')
+        self.temas['values'] = ('Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Morado')
         self.temas.place(x=20, y=200)
         self.temas.bind("<<ComboboxSelected>>", self.detecta_cambio)
 
@@ -265,13 +266,21 @@ class Roxana():
         seleccionado = self.temas.get()
         print("Nuevo elemento seleccionado:", seleccionado)
 
-        if seleccionado == "Claro":
-            self.backcolor = "#ffffff"
-            self.fgcolor = "black"
-        if seleccionado == "Oscuro (por defecto)":
-            self.backcolor = "#141454"
-            self.fgcolor = "white"
+        temas = [['Claro', 'Oscuro (por defecto)', 'Verde', 'Rojo', 'Cielo', 'Morado'],
+                      ["#ffffff", "#141454", "#34B677", "#FB2929", "#31DFE8", "#340A3C"],
+                      ["#000000", "#ffffff", "#ffffff", "#ffffff", "#000000", "#ffffff"]]
+
+        for i in range(len(temas[0])):
+            if temas[0][i] in seleccionado:
+                print("1", temas[1][i])
+                print("2", temas[2][i])
+                self.backcolor = temas[1][i]
+                self.fgcolor = temas[2][i]
+
+
         self.root.config(bg=self.backcolor)
+        self.root.wm_attributes('-topmost', False)
+        self.root.iconbitmap('./images/icon.ico')
         self.lbl1.config(bg=self.backcolor, fg=self.fgcolor)
         self.lbl2.config(bg=self.backcolor, fg=self.fgcolor)
         self.lbl3.config(bg=self.backcolor, fg=self.fgcolor)
@@ -312,6 +321,8 @@ class Roxana():
         posicion = str(ancho_ventana) + "x" + str(alto_ventana) + "+" + str(x_ventana) + "+" + str(y_ventana)
         self.root.geometry(posicion)
         self.root.config(bg=self.backcolor)
+        self.root.wm_attributes('-topmost', False)
+        self.root.iconbitmap('./images/icon.ico')
         #self.root.overrideredirect(True)
         self.root.resizable(0, 0)
         imagen = ("./images/64x64.png")
@@ -477,6 +488,14 @@ class Roxana():
         playsound._playsoundWin(filename)
 
     def reload(self):
-        self.root.destroy()
-        self.Roxana()
+        pass
+
+
+
+
+
+
+
+
+
 
